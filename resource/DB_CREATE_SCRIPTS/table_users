@@ -1,0 +1,18 @@
+CREATE TABLE `blog_db`.`users` (
+  `id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  `login` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `surname` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC),
+  UNIQUE INDEX `login_UNIQUE` (`login` ASC));
+
+  ALTER TABLE users MODIFY COLUMN id INT auto_increment
+
+
+    ALTER TABLE users DROP COLUMN id;
+    ALTER TABLE users ADD PRIMARY KEY(comment_id);
+    ALTER TABLE users MODIFY COLUMN user_id INT auto_increment;
+

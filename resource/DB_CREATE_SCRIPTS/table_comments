@@ -1,0 +1,27 @@
+CREATE TABLE `blog_db`.`comments` (
+  `id` INT NOT NULL,
+  `comment_id` INT NOT NULL,
+   `user_id` INT NULL,
+  `post_id` INT NULL,
+  `created` DATETIME NULL,
+  `text` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `comment_id_UNIQUE` (`comment_id` ASC),
+  INDEX `fk_user_id_idx` (`user_id` ASC),
+  CONSTRAINT `fk_commnets_user_id`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `blog_db`.`users` (`user_id`),
+    
+  INDEX `fk_post_id_idx` (`post_id` ASC),
+  CONSTRAINT `fk_post_id`
+    FOREIGN KEY (`post_id`)
+    REFERENCES `blog_db`.`posts` (`post_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+    ALTER TABLE comments MODIFY COLUMN id INT auto_increment;
+
+    ALTER TABLE comments DROP COLUMN id;
+    ALTER TABLE comments ADD PRIMARY KEY(comment_id);
+    ALTER TABLE comments MODIFY COLUMN comment_id INT auto_increment;
+

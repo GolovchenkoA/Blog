@@ -1,0 +1,22 @@
+CREATE TABLE `blog_db`.`posts` (
+  `id` INT NOT NULL,
+  `post_id` INT NOT NULL,
+  `post_title` VARCHAR(15) NOT NULL,
+  `created` DATETIME NULL,
+  `user_id` INT NULL,
+  `text` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `post_id_UNIQUE` (`post_id` ASC),
+  UNIQUE INDEX `post_title_UNIQUE` (`post_title` ASC),
+  INDEX `fk_user_id_idx` (`user_id` ASC),
+  CONSTRAINT `fk_user_id`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `blog_db`.`users` (`user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+ALTER TABLE posts MODIFY COLUMN id INT auto_increment;
+
+
+    ALTER TABLE posts DROP COLUMN id;
+    ALTER TABLE posts ADD PRIMARY KEY(post_id);
+    ALTER TABLE posts MODIFY COLUMN post_id INT auto_increment;
