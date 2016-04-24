@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class LoginServlet extends HttpServlet {
@@ -33,6 +34,7 @@ public class LoginServlet extends HttpServlet {
 
         if(req.getRequestURI().equals("/login")){
 
+
             UserService userService = new UserService();
             String login = req.getParameter("login");
             String password = req.getParameter("password");
@@ -40,7 +42,13 @@ public class LoginServlet extends HttpServlet {
             User user = userService.findByLogin(login);
 
             if(user.getLogin() !=null && user.getLogin().equals(login) && user.getPassword().equals(password)){
-                resp.sendRedirect("/postsServlet");
+
+                HttpSession session = req.getSession(true);
+                session.setMaxInactiveInterval(30 * 60);
+                session.setAttribute("userid", user.getId());
+                session.setAttribute("login", user.getLogin());
+
+                resp.sendRedirect("/posts");
             }
         }
 

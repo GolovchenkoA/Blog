@@ -35,6 +35,8 @@
         <url-pattern>/posts/*</url-pattern>
     </filter-mapping-->
 
+
+<!--  Добавил через аннотацию
     <filter>
         <filter-name>postsServlet</filter-name>
         <filter-class>com.company.controller.PostsServlet</filter-class>
@@ -43,7 +45,7 @@
     <filter-mapping>
         <filter-name>postsServlet</filter-name>
         <url-pattern>/posts</url-pattern>
-    </filter-mapping>
+    </filter-mapping-->
 
     <!--filter>
         <filter-name>servletTest</filter-name>

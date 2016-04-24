@@ -19,7 +19,7 @@ public class SignUpServlet  extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-
+        String url;
         String action = req.getRequestURI();
         System.out.println(action);
 
@@ -35,27 +35,36 @@ public class SignUpServlet  extends HttpServlet {
 
             // Пробуем создать нового пользователя
             UserService userService = new UserService();
+            User foundUser = userService.findByLogin(login);
 
                 // Если пользователя с таким логином в базе нет
-                if(userService.findByLogin(login) != null){
+                if(foundUser.getId() != null){
                     // Если пользователь существует
+                    System.out.println("User with login: [" + login + "] already exists");
                     req.setAttribute("message", "User with login: [" + login + "] already exists");
+
                     // forward request and response objects to specified URL
-                    getServletContext().getRequestDispatcher("/signup").forward(req, resp);
+                    getServletContext().getRequestDispatcher("/WEB-INF/jsp/signUp.jsp").forward(req, resp);
+                    //url = "/WEB-INF/jsp/signUp.jsp";
 
                 }else {
-                    Long userID = userService.save(user);
-                    //getServletContext().getRequestDispatcher("/login").forward(req, resp);
 
-                    if (userID!= 0L){
+                        Long userID = userService.save(user);
+                        //getServletContext().getRequestDispatcher("/login").forward(req, resp);
+                    //Если получили ID пользователя отправляем на станицу логина
+                    if (!userID.equals(0L)){
                         resp.sendRedirect("/login");
                     }else {
+                        System.out.println("Пользователя не удалось сохранить в БД");
                         req.setAttribute("message", "Пользователя не удалось сохранить в БД");
                         // forward request and response objects to specified URL
-                        getServletContext().getRequestDispatcher("/signup").forward(req, resp);
+                        getServletContext().getRequestDispatcher("/WEB-INF/jsp/signUp.jsp").forward(req, resp);
+                        //url = "/WEB-INF/jsp/signUp.jsp";
                     }
 
                 }
+
+
         }
     }
 }

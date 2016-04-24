@@ -37,6 +37,7 @@ public class UserDao implements IUserDao {
     @Override
     public User findByLogin(String login){
 
+        User user = new User();
         try(Connection con = ConnectionUtil.createConnection()){
 
                 PreparedStatement statement = con.prepareStatement("SELECT * FROM USERS WHERE login =?");
@@ -48,7 +49,7 @@ public class UserDao implements IUserDao {
                 ResultSet resultSet = statement.executeQuery();
 
                 if(resultSet.next()){
-                    return extractUser(resultSet);
+                    user = extractUser(resultSet);
                 }
         }catch (SQLException e){
             System.out.println("Ошибка в классе UserDao. Method findByLogin ");
@@ -56,7 +57,7 @@ public class UserDao implements IUserDao {
 
         }
 
-        return null;
+        return user;
     }
 
     @Override
@@ -90,14 +91,19 @@ public class UserDao implements IUserDao {
 
     private User extractUser(ResultSet resultSet) throws SQLException {
 
+            User user = new User();
 
-        return new User(
-                //resultSet.getLong("user_id"),
-                resultSet.getString("login"),
-                resultSet.getString("password"),
-                resultSet.getString("username"));
+            user.setId(resultSet.getLong("user_id"));
+            user.setLogin(resultSet.getString("login"));
+            user.setPassword(resultSet.getString("password"));
+            user.setUsername(resultSet.getString("username"));
+
+        return user;
     }
-/*    return new User(
+
+
+
+    /*    return new User(
                 resultSet.getLong("id"),
                 resultSet.getString("login"),
                 resultSet.getString("password"),
