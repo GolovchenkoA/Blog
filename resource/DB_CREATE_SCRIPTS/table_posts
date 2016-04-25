@@ -20,3 +20,7 @@ ALTER TABLE posts MODIFY COLUMN id INT auto_increment;
     ALTER TABLE posts DROP COLUMN id;
     ALTER TABLE posts ADD PRIMARY KEY(post_id);
     ALTER TABLE posts MODIFY COLUMN post_id INT auto_increment;
+
+
+    ALTER TABLE `blog_db`.`posts`
+    CHANGE COLUMN `created` `created` TIMESTAMP default CURRENT_TIMESTAMP

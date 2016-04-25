@@ -19,13 +19,15 @@ public class LoginServlet extends HttpServlet {
             req.getSession().removeAttribute("username");
             resp.sendRedirect("/login");
             return;
+
         }
 
+        // Если пользователь уже залогинился и снова переходит на страницу логина - перенаправляем на посты
         if (req.getSession().getAttribute("login") != null) {
             resp.sendRedirect("/posts");
             return;
         }
-
+        // если еще не залогинился - отправляем на страницу ауткнтификации
         req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, resp);
     }
 
@@ -34,13 +36,13 @@ public class LoginServlet extends HttpServlet {
 
         if(req.getRequestURI().equals("/login")){
 
-
             UserService userService = new UserService();
             String login = req.getParameter("login");
             String password = req.getParameter("password");
 
             User user = userService.findByLogin(login);
 
+            // Если пользователь найден и Пароль совпадает
             if(user.getLogin() !=null && user.getLogin().equals(login) && user.getPassword().equals(password)){
 
                 HttpSession session = req.getSession(true);
@@ -49,6 +51,9 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("login", user.getLogin());
 
                 resp.sendRedirect("/posts");
+            }else { // Если пользователь не найден или пароль пользователя не совпадет
+                req.setAttribute("message","Логин или пароль не совпадает");
+                req.getRequestDispatcher("/login").forward(req,resp); //отправляем в метод doGet
             }
         }
 

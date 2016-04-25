@@ -1,7 +1,7 @@
 package com.company;
 
-import com.company.model.User;
-import com.company.service.UserService;
+import com.company.model.Post;
+import com.company.service.PostService;
 
 /**
  * Created by art on 23.04.2016.
@@ -10,6 +10,10 @@ public class MainStart {
 
     public static void main(String[] args) {
 
+
+
+
+        /* ТЕСТЫ С СОЗДАНИЕМ\ ПОЛУЧЕНИЕМ ПОЛЬЗОВАТЕЛЯ
         UserService userService = new UserService();
         User user = new User();
         String login = "usr";
@@ -18,7 +22,7 @@ public class MainStart {
         user.setPassword("pwd");
         user.setUsername("usrName");
 
-       /* System.out.println(userService.findByLogin("admin"));*/
+       *//* System.out.println(userService.findByLogin("admin"));*//*
         User foundUser = userService.findByLogin(login);
 
         System.out.println(foundUser);
@@ -43,7 +47,7 @@ public class MainStart {
             }
 
         }
-
+*/
 
 
 
@@ -55,5 +59,32 @@ public class MainStart {
 /*        User user = new User("admin","admin","admin");
         UserService userService = new UserService();
         System.out.println("id new user: " + new Long(userService.save(user)));*/
+
+/*
+        *//*ТЕСТЫ С СОЗДАНИЕМ\ ПОЛУЧЕНИЕМ Поста*//*
+
+        PostService postService = new PostService();
+        List<PostDto> postList = postService.list();
+        //System.out.println(postList);
+        for(PostDto postDto:postList){
+            System.out.println("Post: " + postDto.getPost().getTopic() + " User: " + postDto.getUser().toString() );
+        }*/
+
+/*
+        /*//*ТЕСТЫ С regexp*//**//*
+
+        String text ="/posts";
+        String patternString = "^(/post)/(\\d+)"; // ".*http://.*";
+        Pattern pattern = Pattern.compile(patternString);
+        Matcher matcher = pattern.matcher(text);
+        boolean matches = matcher.matches();
+        System.out.println("matches = " + matches);*/
+
+
+        PostService postService = new PostService();
+        Post post = postService.get(1L);
+        post.toString();
+
+
     }
 }

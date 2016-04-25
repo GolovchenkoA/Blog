@@ -25,7 +25,8 @@
         <url-pattern>/signup</url-pattern>
     </servlet-mapping>
 
-    <!--filter>
+<!--
+    <filter>
         <filter-name>securityFilter</filter-name>
         <filter-class>com.company.controller.SecurityFilter</filter-class>
     </filter>
@@ -33,7 +34,8 @@
     <filter-mapping>
         <filter-name>securityFilter</filter-name>
         <url-pattern>/posts/*</url-pattern>
-    </filter-mapping-->
+    </filter-mapping>
+-->
 
 
 <!--  Добавил через аннотацию

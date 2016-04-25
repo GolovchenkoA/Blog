@@ -1,23 +1,16 @@
 package com.company.service;
 
 import com.company.dao.CommentDao;
-import com.company.dao.ICommentDao;
-import com.company.dto.CommentDto;
 import com.company.model.Comment;
-import com.company.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CommentService {
 
-    private static CommentService instance = new CommentService();
+    private CommentDao commentDao = new CommentDao();
 
-    public static CommentService getInstance() {
-        return instance;
-    }
+    public Long save(Comment comment) { return commentDao.save(comment); }
 
-    public Comment save(Comment comment) { return null; }
-
-    public List<CommentDto> listByPost(Long postId) { return null; }
+    //public List<CommentDto> listByPost(Long postId) { return null; }
+    public List<Comment> listByPost(Long postId) { return commentDao.listByPost(postId); }
 }

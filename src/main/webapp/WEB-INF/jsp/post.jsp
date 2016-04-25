@@ -8,19 +8,36 @@
 </head>
 <body>
 
-<form action="/new_post" method="post">
+<%-- Пост--%>
+<h3>Тема: ${postDTO.getPost().getTopic()}</h3>
+<p>${postDTO.post.getText()}</p>
+<h6>Создан пользователем ${postDTO.getUser().getLogin()} в ${postDTO.getPost().getDate()}</h6>
+
+<%-- Комментарии к посту--%>
+<c:forEach var="comment" items="${commentList}" >
+    <p><h5>${comment.getText()}</h5></p>
+    <p>Created by (user_id) : ${comment.getUserId()}</p>
+    <%--table border=1>
+        <tr>
+            <td>${comment.getText()}</td>
+        </tr>
+    </table--%>
+</c:forEach>
+
+<%-- Добавление нового комментария--%>
+<form action="/new_comment" method="post">
     <fieldset>
-        <legend>Создание нового поста</legend>
-        <p><label>Заголовок: </label><input type="text" name="post_title" placeholder="Тема Поста" autofocus  ></p>
-        </p><textarea cols="20" rows="20" name="post_text"></textarea></p>
+        <legend>Новый Комментарий</legend>
+        <input type="hidden" name="post_id" value=${postDTO.getPost().getId()}>
+        <input type="hidden" name="user_id" value=${postDTO.getUser().getId()}>
+        <input type="text" name="comment_text"/>
+        <%--</p><textarea cols="50" rows="20" name="comment_text" autofocus></textarea></p>--%>
         <p><input type="file" name="file" accept=".txt" placeholder="Загрузить файл" ></p>
-        <input type="submit" value="Добавить пост"></input>
+        <input type="submit" value="Добавить комментарий"></input>
     </fieldset>
-
-    <c:if test="${(not empty login) && ( login != null)}">
-        <div>Вход выполнено под пользователем ${login}</div>
-    </c:if>
-
+    <p>PostID: ${postDTO.getPost().getId()}</p>
+    <p>LoginID: ${postDTO.getUser().getLogin()}</p>
 </form>
+
 </body>
 </html>

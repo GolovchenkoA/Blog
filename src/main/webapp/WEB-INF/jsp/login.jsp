@@ -8,6 +8,9 @@
     <input type='text' name='login' placeholder='Login'/>
     <input type='password' name='password' placeholder='Password'/>
     <button type='submit'>Login</button>
+    <c:if test="${(not empty message) && ( message != null)}">
+        <div>${message}</div>
+    </c:if>
 </form>
 </body>
 </html>

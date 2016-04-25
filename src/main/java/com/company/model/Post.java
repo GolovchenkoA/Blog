@@ -10,8 +10,10 @@ public class Post {
     private Long userId;
     private Timestamp date;
 
-    public Post(Long id, String topic, String text, Long userId, Timestamp date) {
-        this.id = id;
+    public Post(){}
+
+    public Post(String topic, String text, Long userId, Timestamp date) {
+        //this.id = id;
         this.topic = topic;
         this.text = text;
         this.userId = userId;

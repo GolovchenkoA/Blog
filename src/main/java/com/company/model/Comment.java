@@ -10,8 +10,9 @@ public class Comment {
     private Long userId;
     private Long postId;
 
-    public Comment(Long id, String text, Timestamp date, Long userId, Long postId) {
-        this.id = id;
+    public Comment(){}
+    public Comment(String text, Timestamp date, Long userId, Long postId) {
+        //this.id = id;
         this.text = text;
         this.date = date;
         this.userId = userId;
@@ -56,5 +57,14 @@ public class Comment {
 
     public void setPostId(Long postId) {
         this.postId = postId;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Post id: " + getPostId()
+                + " User id: " + getUserId()
+                + " comment text: " + getText()
+                + " comment date: " + getDate();
     }
 }

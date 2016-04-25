@@ -8,6 +8,16 @@ import java.sql.*;
 
 public class UserDao implements IUserDao {
 
+    private static UserDao userDao = new UserDao();
+    /**
+     * Статический метод для использования в классе PostDTO
+     * @param  id  это user id
+     * @return      обїект пользователя
+     */
+    public static User getUser(Long id){
+        return userDao.get(id);
+    }
+
     @Override
     public User get(Long id) {
 
@@ -38,14 +48,13 @@ public class UserDao implements IUserDao {
     public User findByLogin(String login){
 
         User user = new User();
+        // Если пользователя нет в базе - уходит в безсконечный цикл
         try(Connection con = ConnectionUtil.createConnection()){
 
                 PreparedStatement statement = con.prepareStatement("SELECT * FROM USERS WHERE login =?");
                 //PreparedStatement statement = con.prepareStatement("SELECT * FROM ACCOUNTS WHERE customerid =?");
                 statement.setString(1, login);
-
-                System.out.println("Find user loging: " + statement.toString());
-
+                System.out.println("Find user by login: " + statement.toString());
                 ResultSet resultSet = statement.executeQuery();
 
                 if(resultSet.next()){
@@ -78,7 +87,7 @@ public class UserDao implements IUserDao {
                 ResultSet resultSet = statement.getGeneratedKeys();
 
             while (resultSet.next()) {
-                generatedID = (long) resultSet.getInt(1);
+                generatedID = resultSet.getLong(1);
             }
 
         } catch(SQLException e){

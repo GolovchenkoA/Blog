@@ -25,3 +25,6 @@ CREATE TABLE `blog_db`.`comments` (
     ALTER TABLE comments ADD PRIMARY KEY(comment_id);
     ALTER TABLE comments MODIFY COLUMN comment_id INT auto_increment;
 
+    ALTER TABLE `blog_db`.`comments`
+    CHANGE COLUMN `created` `created` TIMESTAMP default CURRENT_TIMESTAMP
+
