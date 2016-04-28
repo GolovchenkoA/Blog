@@ -16,7 +16,7 @@ public class PostDao implements IPostDao {
 
         try(Connection connection = ConnectionUtil.createConnection()){
 
-            PreparedStatement statement = connection.prepareStatement("SELECT post_id,post_title,text,user_id,created FROM posts where post_id = ? ");
+            PreparedStatement statement = connection.prepareStatement("SELECT post_id,post_title,text,user_id,created, attachment FROM posts where post_id = ? ");
             statement.setLong(1,id);
             System.out.println("Find post : " + statement.toString());
             ResultSet resultSet = statement.executeQuery();
@@ -38,11 +38,12 @@ public class PostDao implements IPostDao {
         Long postID = 0L;
 
         try(Connection connection = ConnectionUtil.createConnection()){
-            String query = "INSERT INTO posts (post_title,text,user_id) VALUES (?,?,?)";
+            String query = "INSERT INTO posts (post_title,text,user_id,attachment) VALUES (?,?,?,?)";
             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1,post.getTopic());
             statement.setString(2,post.getText());
             statement.setLong(3,post.getUserId());
+            if(post.getAttachment() != null){ statement.setBlob(4,post.getAttachment());}
 
             // поставил что бы автоматически генерировалось на стороне БД
             //statement.setDate(4,(new Date(post.getDate().getTime())));
@@ -89,6 +90,10 @@ public class PostDao implements IPostDao {
         post.setText(resultSet.getString("text"));
         post.setUserId(resultSet.getLong("user_id"));
         post.setDate(resultSet.getTimestamp("created"));
+        /*post.setAttachment(resultSet.getBlob("attachment").getBinaryStream());*/
+        if(resultSet.getBlob("attachment") != null) {
+            post.setAttachment(resultSet.getBlob("attachment").getBinaryStream());
+        }
 
                 /*        return new Post(
                 resultSet.getLong("id"),

@@ -24,3 +24,6 @@ ALTER TABLE posts MODIFY COLUMN id INT auto_increment;
 
     ALTER TABLE `blog_db`.`posts`
     CHANGE COLUMN `created` `created` TIMESTAMP default CURRENT_TIMESTAMP
+
+    ALTER TABLE `blog_db`.`posts`
+    ADD COLUMN `attachment` MEDIUMBLOB NULL DEFAULT NULL AFTER `text`;

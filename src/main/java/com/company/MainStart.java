@@ -1,7 +1,9 @@
 package com.company;
 
-import com.company.model.Post;
+import com.company.dto.PostDto;
 import com.company.service.PostService;
+
+import java.util.List;
 
 /**
  * Created by art on 23.04.2016.
@@ -13,16 +15,16 @@ public class MainStart {
 
 
 
-        /* ТЕСТЫ С СОЗДАНИЕМ\ ПОЛУЧЕНИЕМ ПОЛЬЗОВАТЕЛЯ
-        UserService userService = new UserService();
+         //ТЕСТЫ С СОЗДАНИЕМ\ ПОЛУЧЕНИЕМ ПОЛЬЗОВАТЕЛЯ
+ /*       UserService userService = new UserService();
         User user = new User();
-        String login = "usr";
+        String login = "lalala";
 
         user.setLogin(login);
         user.setPassword("pwd");
         user.setUsername("usrName");
 
-       *//* System.out.println(userService.findByLogin("admin"));*//*
+       /*//* System.out.println(userService.findByLogin("admin"));*//**//*
         User foundUser = userService.findByLogin(login);
 
         System.out.println(foundUser);
@@ -33,7 +35,7 @@ public class MainStart {
             // forward request and response objects to specified URL
            // getServletContext().getRequestDispatcher("/signup").forward(req, resp);
 
-        }else {
+        } */ /*else {
 
             Long userID = userService.save(user);
             //getServletContext().getRequestDispatcher("/login").forward(req, resp);
@@ -46,8 +48,8 @@ public class MainStart {
                 //getServletContext().getRequestDispatcher("/signup").forward(req, resp);
             }
 
-        }
-*/
+        }*/
+
 
 
 
@@ -81,9 +83,27 @@ public class MainStart {
         System.out.println("matches = " + matches);*/
 
 
-        PostService postService = new PostService();
+            // получаем пост
+/*        PostService postService = new PostService();
         Post post = postService.get(1L);
-        post.toString();
+        post.toString();*/
+
+
+/*        PostService postService = new PostService();
+        String postIDstr = "1";  // ID поста
+        Long postID = (long) (new Integer(postIDstr));
+        Post post = postService.get(postID);
+        User user = new UserDao().get(post.getUserId());
+
+        //Post DTO Object
+        PostDto postDto = new PostDto(post,user);
+        System.out.println("Debug: PostsServlet postDTO object: " + postDto);*/
+
+
+
+        PostService postService = new PostService();
+        List<PostDto> postDtoList = postService.list();
+
 
 
     }

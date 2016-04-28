@@ -25,39 +25,6 @@
         <url-pattern>/signup</url-pattern>
     </servlet-mapping>
 
-<!--
-    <filter>
-        <filter-name>securityFilter</filter-name>
-        <filter-class>com.company.controller.SecurityFilter</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>securityFilter</filter-name>
-        <url-pattern>/posts/*</url-pattern>
-    </filter-mapping>
--->
-
-
-<!--  Добавил через аннотацию
-    <filter>
-        <filter-name>postsServlet</filter-name>
-        <filter-class>com.company.controller.PostsServlet</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>postsServlet</filter-name>
-        <url-pattern>/posts</url-pattern>
-    </filter-mapping-->
-
-    <!--filter>
-        <filter-name>servletTest</filter-name>
-        <filter-class>com.company.controller.ServletTest</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>servletTest</filter-name>
-        <url-pattern>/test</url-pattern>
-    </filter-mapping-->
-
     <welcome-file-list>
         <welcome-file>signup</welcome-file>
     </welcome-file-list>

@@ -9,23 +9,26 @@ import com.company.service.CommentService;
 import com.company.service.PostService;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @WebServlet(urlPatterns ={"/posts","/new_post","/post/*"}, name="postsServlet")
+@MultipartConfig(maxFileSize = 16177215)
 public class PostsServlet extends HttpServlet {
 
     // Список постов, которые будут отображаться под формой создание нового поста
     PostService postService = new PostService();
     List<PostDto> postDtoList = postService.list();
-
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -87,15 +90,21 @@ public class PostsServlet extends HttpServlet {
         String action = req.getRequestURI();
 
         if(action.equals("/new_post")){
+
+            InputStream inputStream = null; // Поток для загружаемого файла
             UserDao userDao = new UserDao();
             User user = userDao.findByLogin(req.getSession().getAttribute("login").toString());
             String post_title = req.getParameter("post_title");
             String post_text = req.getParameter("post_text");
-            //String file = req.getParameter("file");  // Прикрутить позже
+            Part attachedFile = req.getPart("attachedFile");
+
+            if(attachedFile != null){ //Если файл прикрепили
+                inputStream = attachedFile.getInputStream();
+            }
 
             java.util.Date date= new java.util.Date();
             java.sql.Timestamp post_time = new Timestamp(date.getTime());
-            Post post = new Post(post_title,post_text, user.getId(),post_time);
+            Post post = new Post(post_title,post_text, user.getId(),post_time, inputStream);
 
             Long postID = postService.save(post);
 
@@ -104,13 +113,13 @@ public class PostsServlet extends HttpServlet {
                 // Добавляем в список новый пост
                 PostDto postDto = new PostDto(post,user);
                 postDtoList.add(postDto);
-                System.out.println("Пользователь сохранен в БД");
+                System.out.println("Пост сохранен в БД");
                 // Перенаправляем снова на страницу постов
                 req.setAttribute("postDTOList", postDtoList);
                 //req.getRequestDispatcher("/WEB-INF/jsp/posts.jsp").forward(req, resp);
             } else { // если пост не удалось сохранить в БД
-                System.out.println("Пользователя не удалось сохранить в БД");
-                req.setAttribute("message", "Пользователя не удалось сохранить в БД");
+                System.out.println("Пост не удалось сохранить в БД");
+                req.setAttribute("message", "Пост не удалось сохранить в БД");
                 //req.getRequestDispatcher("/WEB-INF/jsp/posts.jsp").forward(req, resp);
             }
 

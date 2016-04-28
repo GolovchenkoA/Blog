@@ -1,5 +1,6 @@
 package com.company.model;
 
+import java.io.InputStream;
 import java.sql.Timestamp;
 
 public class Post {
@@ -9,15 +10,17 @@ public class Post {
     private String text;
     private Long userId;
     private Timestamp date;
+    private InputStream attachment;
 
     public Post(){}
 
-    public Post(String topic, String text, Long userId, Timestamp date) {
+    public Post(String topic, String text, Long userId, Timestamp date, InputStream attachment) {
         //this.id = id;
         this.topic = topic;
         this.text = text;
         this.userId = userId;
         this.date = date;
+        this.attachment = attachment;
     }
 
     public Long getId() {
@@ -58,5 +61,13 @@ public class Post {
 
     public void setDate(Timestamp date) {
         this.date = date;
+    }
+
+    public InputStream getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(InputStream attachment) {
+        this.attachment = attachment;
     }
 }

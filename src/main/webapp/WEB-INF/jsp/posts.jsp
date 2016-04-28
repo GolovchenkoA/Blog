@@ -9,12 +9,12 @@
 <body>
 
 
-<form action="/new_post" method="post">
+<form action="/new_post" enctype="multipart/form-data" method="post">
     <fieldset>
         <legend>Создание нового поста</legend>
         <p><label>Заголовок: </label><input type="text" name="post_title" placeholder="Тема Поста" autofocus  ></p>
         </p><textarea cols="20" rows="20" name="post_text"></textarea></p>
-        <p><input type="file" name="file" accept=".txt" placeholder="Загрузить файл" ></p>
+        <p><input type="file" name="attachedFile" accept=".txt" placeholder="Загрузить файл" ></p>
         <input type="submit" value="Добавить пост"></input>
     </fieldset>
 
